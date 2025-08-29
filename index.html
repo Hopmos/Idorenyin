@@ -852,7 +852,7 @@
                     ? `Today's profit is $${userData.dailyProfit.toFixed(2)}.\nType a number (1-7) to return to the main menu.` 
                     : `No profit yet. Your investment starts on ${formatDate(userData.startDate)}.\nType a number (1-7) to return to the main menu.`,
                 '4': `Your investment period is from ${formatDate(userData.startDate)} to ${calculateEndDate(userData.startDate, userData.investmentDays)}. Status: ${status}.\nType a number (1-7) to return to the main menu.`,
-                '5': `For customer service, please email futurestrdinginvestment.org@gmail.com or call +234-805-363-4544.\nType a number (1-7) to return to the main menu.`,
+                '5': `For customer service, please email futurestrdinginvestment.org@gmail.com \nType a number (1-7) to return to the main menu.`,
                 '6': () => {
                     addMessage('Redirecting to deposit page...', 'bot-message');
                     setTimeout(() => window.location.href = 'home.html', 1000);
