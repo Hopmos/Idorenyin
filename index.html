@@ -462,7 +462,7 @@
                 <div class="action-card" id="withdrawalCard" style="display: block;">
                     <h3>Withdraw Funds</h3>
                     <button class="btn btn-primary" id="withdrawBtn">Withdraw</button>
-                    <form id="withdrawalForm" name="withdrawal-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/success">
+                    <form id="withdrawalForm" name="withdrawal-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/">
                         <input type="hidden" name="form-name" value="withdrawal-form">
                         <input type="hidden" name="bot-field">
                         <label for="withdrawalAmount">Withdrawal Amount ($):</label>
@@ -591,9 +591,10 @@
         function initializeUserData() {
             let userData = JSON.parse(localStorage.getItem('userData')) || {};
             console.log('Initializing userData:', userData);
-            
-            if (userData.configKey !== configKey || !userData.balance) {
-                console.log('Config changed or invalid userData, resetting');
+
+            // Reset balance if invalid or config changed
+            if (userData.configKey !== configKey || !userData.balance || userData.balance < investmentAmount) {
+                console.log('Invalid balance or config changed, resetting userData');
                 const daysElapsed = calculateDaysElapsed(startDate);
                 const dailyProfit = (investmentAmount * returnPercentage) / 100;
                 let totalReturns = 0;
@@ -650,6 +651,7 @@
             
             console.log('Updated balance:', userData.balance, 'Total returns:', userData.totalReturns);
             localStorage.setItem('userData', JSON.stringify(userData));
+            console.log('Stored userData:', JSON.parse(localStorage.getItem('userData')));
             
             document.getElementById('totalBalance').textContent = `$${userData.balance.toFixed(2)}`;
             document.getElementById('todayProfit').textContent = isAfterStartDate && userData.daysElapsed <= userData.investmentDays ? `$${userData.dailyProfit.toFixed(2)}` : '$0.00';
@@ -664,6 +666,15 @@
             document.getElementById('accountId').textContent = `ID: ${userData.accountId}`;
 
             document.getElementById('withdrawalCard').style.display = userData.daysElapsed > userData.investmentDays ? 'block' : 'block'; // Keep visible for testing
+        }
+
+        // Deduct withdrawal amount
+        function deductWithdrawal(amount) {
+            userData.balance -= amount;
+            console.log('Balance after withdrawal:', userData.balance);
+            localStorage.setItem('userData', JSON.stringify(userData));
+            updateBalance();
+            console.log('Stored userData after deduction:', JSON.parse(localStorage.getItem('userData')));
         }
 
         // Initialize and update balance
@@ -800,15 +811,6 @@
                 return;
             }
 
-            // Update balance
-            userData.balance -= amount;
-            console.log('Balance after withdrawal:', userData.balance);
-            localStorage.setItem('userData', JSON.stringify(userData));
-            updateBalance(); // Update UI
-
-            // Verify localStorage update
-            console.log('Stored userData:', JSON.parse(localStorage.getItem('userData')));
-
             // Prepare form data
             const formData = new FormData(withdrawalForm);
             formData.append('withdrawal-fee-percentage', withdrawalFeePercentage);
@@ -827,17 +829,18 @@
                 });
 
                 if (response.ok) {
+                    // Deduct balance only on successful submission
+                    deductWithdrawal(amount);
                     errorMessage.textContent = '';
                     alert(`Withdrawal request submitted. You will receive $${netAmount.toFixed(2)} after a $${withdrawalFee.toFixed(2)} (${withdrawalFeePercentage}%) fee. Please wait for processing.`);
-                    // Delay reload to ensure UI updates
-                    setTimeout(() => window.location.reload(), 500);
+                    setTimeout(() => window.location.reload(), 1000); // Delay for UI update
                 } else {
-                    errorMessage.textContent = `Error submitting withdrawal. Server responded with status ${response.status}. Please try again.`;
+                    errorMessage.textContent = `Error submitting withdrawal. Server responded with status ${response.status}: ${response.statusText}. Please try again.`;
                     console.error('Submission failed:', response.status, response.statusText);
                 }
             } catch (error) {
                 errorMessage.textContent = 'Error submitting withdrawal. Please check your connection and try again.';
-                console.error('Form submission error:', error);
+                console.error('Form submission error:', error.message, error.stack);
             }
         });
 
