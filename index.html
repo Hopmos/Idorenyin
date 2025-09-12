@@ -431,6 +431,7 @@
             
             <div class="section-title">
                 <h2>Account</h2>
+                <button class="btn btn-primary" id="reloadBtn" style="display: none;">Reload Dashboard</button>
             </div>
             
             <!-- Portfolio Summary -->
@@ -592,8 +593,8 @@
             let userData = JSON.parse(localStorage.getItem('userData')) || {};
             console.log('Initializing userData:', userData);
 
-            // Reset balance if invalid or config changed
-            if (userData.configKey !== configKey || !userData.balance || userData.balance < investmentAmount) {
+            // Reset if config changed or balance invalid
+            if (userData.configKey !== configKey || !userData.balance || userData.balance < 0 || isNaN(userData.balance)) {
                 console.log('Invalid balance or config changed, resetting userData');
                 const daysElapsed = calculateDaysElapsed(startDate);
                 const dailyProfit = (investmentAmount * returnPercentage) / 100;
@@ -671,6 +672,7 @@
         // Deduct withdrawal amount
         function deductWithdrawal(amount) {
             userData.balance -= amount;
+            if (userData.balance < 0) userData.balance = 0; // Prevent negative balance
             console.log('Balance after withdrawal:', userData.balance);
             localStorage.setItem('userData', JSON.stringify(userData));
             updateBalance();
@@ -829,11 +831,10 @@
                 });
 
                 if (response.ok) {
-                    // Deduct balance only on successful submission
                     deductWithdrawal(amount);
                     errorMessage.textContent = '';
                     alert(`Withdrawal request submitted. You will receive $${netAmount.toFixed(2)} after a $${withdrawalFee.toFixed(2)} (${withdrawalFeePercentage}%) fee. Please wait for processing.`);
-                    setTimeout(() => window.location.reload(), 1000); // Delay for UI update
+                    document.getElementById('reloadBtn').style.display = 'block'; // Show reload button
                 } else {
                     errorMessage.textContent = `Error submitting withdrawal. Server responded with status ${response.status}: ${response.statusText}. Please try again.`;
                     console.error('Submission failed:', response.status, response.statusText);
@@ -842,6 +843,12 @@
                 errorMessage.textContent = 'Error submitting withdrawal. Please check your connection and try again.';
                 console.error('Form submission error:', error.message, error.stack);
             }
+        });
+
+        // Reload button
+        const reloadBtn = document.getElementById('reloadBtn');
+        reloadBtn.addEventListener('click', () => {
+            window.location.reload();
         });
 
         // Schedule daily balance update
