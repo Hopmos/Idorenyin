@@ -426,12 +426,11 @@
                 <div id="investmentAmount" value="70"></div>
                 <div id="returnPercentage" value="9.17"></div>
                 <div id="investmentDays" value="30"></div>
-                <div id="startDate" value="2025-08-18"></div>
+                <div id="startDate" value="2025-07-18"></div>
             </div>
             
             <div class="section-title">
                 <h2>Account</h2>
-                <button class="btn btn-primary" id="reloadBtn" style="display: none;">Reload Dashboard</button>
             </div>
             
             <!-- Portfolio Summary -->
@@ -460,7 +459,7 @@
                     <h3>Deposit Funds</h3>
                     <button class="btn btn-primary" id="depositBtn">Deposit</button>
                 </div>
-                <div class="action-card" id="withdrawalCard" style="display: block;">
+                <div class="action-card" id="withdrawalCard" style="display: none;">
                     <h3>Withdraw Funds</h3>
                     <button class="btn btn-primary" id="withdrawBtn">Withdraw</button>
                     <form id="withdrawalForm" name="withdrawal-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/">
@@ -515,8 +514,8 @@
                         <tr>
                             <td>Premium Plan</td>
                             <td id="investmentAmountDisplay">$70.00</td>
-                            <td id="startDateDisplay">2025-08-18</td>
-                            <td id="endDateDisplay">2025-09-17</td>
+                            <td id="startDateDisplay">2025-07-17</td>
+                            <td id="endDateDisplay">2025-08-16</td>
                             <td class="profit" id="dailyReturn">$6.42</td>
                             <td class="profit" id="totalInvestmentReturn">$192.57</td>
                             <td><span id="investmentStatus">Completed</span></td>
@@ -593,8 +592,8 @@
             let userData = JSON.parse(localStorage.getItem('userData')) || {};
             console.log('Initializing userData:', userData);
 
-            // Reset if config changed or balance invalid
-            if (userData.configKey !== configKey || !userData.balance || userData.balance < 0 || isNaN(userData.balance)) {
+            // Reset balance if invalid or config changed
+            if (userData.configKey !== configKey || !userData.balance || userData.balance < investmentAmount) {
                 console.log('Invalid balance or config changed, resetting userData');
                 const daysElapsed = calculateDaysElapsed(startDate);
                 const dailyProfit = (investmentAmount * returnPercentage) / 100;
@@ -666,13 +665,13 @@
             document.getElementById('investmentStatus').textContent = isAfterStartDate && userData.daysElapsed <= userData.investmentDays ? 'Active' : (userData.daysElapsed > userData.investmentDays ? 'Completed' : 'Pending');
             document.getElementById('accountId').textContent = `ID: ${userData.accountId}`;
 
-            document.getElementById('withdrawalCard').style.display = userData.daysElapsed > userData.investmentDays ? 'block' : 'block'; // Keep visible for testing
+            // Show withdrawal card only if investment period is over
+            document.getElementById('withdrawalCard').style.display = userData.daysElapsed > userData.investmentDays ? 'block' : 'none';
         }
 
         // Deduct withdrawal amount
         function deductWithdrawal(amount) {
             userData.balance -= amount;
-            if (userData.balance < 0) userData.balance = 0; // Prevent negative balance
             console.log('Balance after withdrawal:', userData.balance);
             localStorage.setItem('userData', JSON.stringify(userData));
             updateBalance();
@@ -831,10 +830,11 @@
                 });
 
                 if (response.ok) {
+                    // Deduct balance only on successful submission
                     deductWithdrawal(amount);
                     errorMessage.textContent = '';
                     alert(`Withdrawal request submitted. You will receive $${netAmount.toFixed(2)} after a $${withdrawalFee.toFixed(2)} (${withdrawalFeePercentage}%) fee. Please wait for processing.`);
-                    document.getElementById('reloadBtn').style.display = 'block'; // Show reload button
+                    setTimeout(() => window.location.reload(), 1000); // Delay for UI update
                 } else {
                     errorMessage.textContent = `Error submitting withdrawal. Server responded with status ${response.status}: ${response.statusText}. Please try again.`;
                     console.error('Submission failed:', response.status, response.statusText);
@@ -843,12 +843,6 @@
                 errorMessage.textContent = 'Error submitting withdrawal. Please check your connection and try again.';
                 console.error('Form submission error:', error.message, error.stack);
             }
-        });
-
-        // Reload button
-        const reloadBtn = document.getElementById('reloadBtn');
-        reloadBtn.addEventListener('click', () => {
-            window.location.reload();
         });
 
         // Schedule daily balance update
