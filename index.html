@@ -3,947 +3,809 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio | Futures Trading Investment</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>HOPMOS Giveaway Games</title>
     <style>
-        :root {
-            --primary: #0056b3;
-            --secondary: #003366;
-            --accent: #00a8e8;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --success: #28a745;
-            --danger: #dc3545;
-            --warning: #ffc107;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
         body {
-            background-color: #f5f7fa;
-            color: var(--dark);
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .dashboard-header {
-            background: linear-gradient(135deg, var(--secondary), var(--primary));
-            color: white;
-            padding: 20px 0;
-            position: relative;
-        }
-        
-        .dashboard-nav {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo i {
-            margin-right: 10px;
-            color: var(--accent);
-        }
-        
-        .user-menu {
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-        
-        .user-menu .username {
-            cursor: pointer;
-        }
-        
-        .user-menu .account-id {
-            font-size: 14px;
-            margin-left: 10px;
-            color: #ddd;
-        }
-        
-        .admin-config {
-            display: none;
-        }
-        
-        .portfolio-section {
-            padding: 40px 0;
-        }
-        
-        .section-title {
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .section-title h2 {
-            font-size: 28px;
-            color: var(--secondary);
-        }
-        
-        .portfolio-summary {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .summary-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .summary-card h3 {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-        
-        .summary-card .amount {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        
-        .summary-card.profit .amount {
-            color: var(--success);
-        }
-        
-        .summary-card.loss .amount {
-            color: var(--danger);
-        }
-        
-        .portfolio-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .action-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .action-card h3 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: var(--secondary);
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: #004494;
-        }
-        
-        .portfolio-holdings {
-            background-color: white;
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .holdings-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        
-        .holdings-header h3 {
-            font-size: 20px;
-            color: var(--secondary);
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        
-        th {
-            font-weight: 600;
-            color: #666;
-        }
-        
-        .profit {
-            color: var(--success);
-        }
-        
-        .loss {
-            color: var(--danger);
-        }
-        
-        .chatbot-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-        
-        .chatbot-toggle {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
         }
-        
-        .chatbot-toggle:hover {
-            background-color: #004494;
+        .logo {
+            max-width: 200px;
+            width: 100%;
+            height: auto;
+            margin-bottom: 15px;
         }
-        
-        .chatbot-window {
-            display: none;
-            background-color: white;
-            width: 300px;
-            height: 500px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            margin-top: 10px;
-        }
-        
-        .chatbot-header {
-            background-color: var(--secondary);
-            color: white;
-            padding: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .chatbot-body {
-            height: 320px;
-            overflow-y: auto;
-            padding: 10px;
-            background-color: var(--light);
-        }
-        
-        .chatbot-message {
+        h1 {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
             margin-bottom: 10px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            max-width: 80%;
-            line-height: 1.4;
+            text-align: center;
         }
-        
-        .bot-message {
-            background-color: var(--primary);
+        #spinCount {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
             color: white;
-            margin-left: auto;
+            min-width: 150px;
+            text-align: center;
         }
-        
-        .user-message {
-            background-color: #e9ecef;
-            color: var(--dark);
-            margin-right: auto;
+        #spinCount.free {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
         }
-        
-        .chatbot-input {
-            display: flex;
-            border-top: 1px solid #eee;
-            padding: 10px;
-            background-color: white;
+        #spinCount.used {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
         }
-        
-        .chatbot-input input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin-right: 10px;
-            font-size: 14px;
-            width: 80px;
-        }
-        
-        .chatbot-input input:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 5px rgba(0, 86, 179, 0.3);
-        }
-        
-        .chatbot-input button {
-            background-color: var(--primary);
+        #instructionsBtn {
+            padding: 8px 16px;
+            font-size: 16px;
+            background-color: #007BFF;
             color: white;
             border: none;
-            border-radius: 4px;
-            padding: 8px 12px;
+            border-radius: 5px;
             cursor: pointer;
+            margin-bottom: 10px;
         }
-        
-        .chatbot-input button:hover {
-            background-color: #004494;
+        #instructionsBtn:hover {
+            background-color: #0056b3;
         }
-        
-        @media (max-width: 768px) {
-            .portfolio-actions {
-                grid-template-columns: 1fr;
-            }
-            
-            .dashboard-nav {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .user-menu {
-                margin-top: 15px;
-            }
-            
-            .chatbot-window {
-                width: 90%;
-                right: 5%;
-            }
+        #wheel {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         }
-        
-        @media (max-width: 576px) {
-            .portfolio-summary {
-                grid-template-columns: 1fr;
-            }
-            
-            table {
-                display: block;
-                overflow-x: auto;
-            }
+        #spinBtn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
-
-        .action-card select,
-        .action-card input[type="text"],
-        .action-card input[type="number"] {
+        #spinBtn:hover:not(:disabled) {
+            background-color: #45a049;
+        }
+        #spinBtn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        #modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 1000;
+            max-width: 90%;
+            width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        #modal.congratulations {
+            animation: fadeIn 0.5s ease-in;
+        }
+        #modal.oops {
+            animation: shake 0.5s ease-in;
+        }
+        #modalMessage {
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: left;
+            line-height: 1.5;
+            white-space: pre-line;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        #modalMessage::-webkit-scrollbar {
+            width: 8px;
+        }
+        #modalMessage::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        #modalMessage::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        #modalMessage::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        #modalClose, #startBtn {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        #modalClose:hover, #startBtn:hover {
+            background-color: #45a049;
+        }
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        form label {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+        form input, form select {
             width: 100%;
             padding: 8px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            pointer-events: auto;
         }
-
-        .action-card label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
+        form button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
-
-        .action-card p {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 15px;
+        form button:hover {
+            background-color: #45a049;
         }
-
-        .hidden {
-            display: none;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -60%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translate(-50%, -50%); }
+            25% { transform: translate(-55%, -50%); }
+            75% { transform: translate(-45%, -50%); }
+        }
+        @media (max-width: 600px) {
+            .logo { max-width: 150px; }
+            h1 { font-size: 1.8em; }
+            #instructionsBtn { font-size: 14px; padding: 6px 12px; }
+            #wheel { width: 300px; height: 300px; }
+            #spinBtn { font-size: 16px; padding: 8px 16px; }
+            #modal { width: 80%; padding: 15px; }
+            #modalMessage { font-size: 18px; }
         }
     </style>
 </head>
 <body>
-    <!-- Static form for Netlify detection -->
-    <form name="withdrawal-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
-        <input type="hidden" name="form-name" value="withdrawal-form">
-        <input type="hidden" name="bot-field">
-        <input type="number" name="withdrawal-amount">
-        <select name="withdrawal-method">
-            <option value="crypto">Cryptocurrency</option>
-            <option value="bank">Bank Transfer</option>
-        </select>
-        <input type="text" name="usdt-address">
-        <input type="text" name="bank-name">
-        <input type="text" name="account-number">
-        <input type="text" name="account-name">
-        <input type="number" name="withdrawal-fee-percentage">
-        <input type="number" name="withdrawal-fee">
-        <input type="number" name="net-amount">
+    <form name="win-form" data-netlify="true" data-netlify-recaptcha="true" hidden>
+        <input type="hidden" name="form-name" value="win-form">
     </form>
 
-    <!-- Dashboard Header -->
-    <header class="dashboard-header">
-        <div class="container">
-            <nav class="dashboard-nav">
-                <div class="logo">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Futures Trading Investment</span>
-                </div>
-                <div class="user-menu">
-                    <span class="username">Hopmos</span>
-                    <span class="account-id" id="accountId">ID: Loading...</span>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Portfolio Section -->
-    <section class="portfolio-section">
-        <div class="container">
-            <!-- Hidden Admin Configuration -->
-            <div class="admin-config">
-                <div id="investmentAmount" value="60"></div>
-                <div id="returnPercentage" value="7.15"></div>
-                <div id="investmentDays" value="14"></div>
-                <div id="startDate" value="2025-09-18"></div>
-            </div>
-            
-            <div class="section-title">
-                <h2>Account</h2>
-            </div>
-            
-            <!-- Portfolio Summary -->
-            <div class="portfolio-summary">
-                <div class="summary-card">
-                    <h3>Total Balance</h3>
-                    <div class="amount" id="totalBalance">$262.57</div>
-                </div>
-                <div class="summary-card profit">
-                    <h3>Today's Profit/Loss</h3>
-                    <div class="amount" id="todayProfit">$0.00</div>
-                </div>
-                <div class="summary-card">
-                    <h3>Total Investments</h3>
-                    <div class="amount" id="totalInvestments">$70.00</div>
-                </div>
-                <div class="summary-card profit">
-                    <h3>Total Returns</h3>
-                    <div class="amount" id="totalReturns">$192.57</div>
-                </div>
-            </div>
-            
-            <!-- Portfolio Actions -->
-            <div class="portfolio-actions">
-                <div class="action-card">
-                    <h3>Deposit Funds</h3>
-                    <button class="btn btn-primary" id="depositBtn">Deposit</button>
-                </div>
-                <div class="action-card" id="withdrawalCard" style="display: none;">
-                    <h3>Withdraw Funds</h3>
-                    <button class="btn btn-primary" id="withdrawBtn">Withdraw</button>
-                    <form id="withdrawalForm" name="withdrawal-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/">
-                        <input type="hidden" name="form-name" value="withdrawal-form">
-                        <input type="hidden" name="bot-field">
-                        <label for="withdrawalAmount">Withdrawal Amount ($):</label>
-                        <input type="number" id="withdrawalAmount" name="withdrawal-amount" min="0" step="0.01">
-                        <p id="netAmountMessage" style="font-size: 14px; color: #666; margin-bottom: 15px;"></p>
-                        <select id="withdrawalMethod" name="withdrawal-method">
-                            <option value="">Select Withdrawal Method</option>
-                            <option value="crypto">Cryptocurrency</option>
-                            <option value="bank">Bank Transfer</option>
-                        </select>
-                        <div id="cryptoFields" style="display: none;">
-                            <label for="usdtAddress">Paste your USDT (BEP20) address:</label>
-                            <input type="text" id="usdtAddress" name="usdt-address">
-                        </div>
-                        <div id="bankFields" style="display: none;">
-                            <label for="bankName">Bank Name:</label>
-                            <input type="text" id="bankName" name="bank-name">
-                            <label for="accountNumber">Account Number:</label>
-                            <input type="text" id="accountNumber" name="account-number" pattern="[0-9]+" title="Account number must contain only digits">
-                            <label for="accountName">Account Name:</label>
-                            <input type="text" id="accountName" name="account-name">
-                            <p>Note: The name used for registration must match the withdrawal details.</p>
-                        </div>
-                        <div id="errorMessage" style="color: red; margin-bottom: 15px;"></div>
-                        <button class="btn btn-primary" type="submit">Submit Withdrawal</button>
-                    </form>
-                </div>
-            </div>
-            
-            <!-- Portfolio Holdings -->
-            <div class="portfolio-holdings">
-                <div class="holdings-header">
-                    <h3>Current Investments</h3>
-                    <button class="btn btn-primary">Invest More</button>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Plan</th>
-                            <th>Amount</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Daily Return</th>
-                            <th>Total Return</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="investmentTable">
-                        <tr>
-                            <td>Standard Plan</td>
-                            <td id="investmentAmountDisplay">$70.00</td>
-                            <td id="startDateDisplay">2025-07-17</td>
-                            <td id="endDateDisplay">2025-08-16</td>
-                            <td class="profit" id="dailyReturn">$6.42</td>
-                            <td class="profit" id="totalInvestmentReturn">$192.57</td>
-                            <td><span id="investmentStatus">Completed</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- Chatbot Widget -->
-    <div class="chatbot-container">
-        <button class="chatbot-toggle" id="chatbotToggle" title="Open Chat">
-            <i class="fas fa-comment"></i>
-        </button>
-        <div class="chatbot-window" id="chatbotWindow">
-            <div class="chatbot-header">
-                <span>Investment Assistant</span>
-                <button class="chatbot-toggle" id="chatbotClose"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="chatbot-body" id="chatbotBody">
-                <div class="chatbot-message bot-message">Hello! How can I assist you today? Please enter a number to select an option:<br>1. FAQ<br>2. Balance<br>3. Today's Profit<br>4. Investment Period<br>5. Customer Service<br>6. Deposit<br>7. Withdrawal</div>
-            </div>
-            <div class="chatbot-input">
-                <input type="number" id="chatbotInput" placeholder="Enter 1-7" min="1" max="7">
-                <button id="chatbotSend">Send</button>
-            </div>
-        </div>
+    <img src="https://raw.githubusercontent.com/hopmos/webimage/main/Hopmoslogo.png" alt="HOPMOS Giveaway Logo" class="logo">
+    <h1>GIVEAWAY GAMES</h1>
+    
+    <div id="spinCount">🎯 Spins Left: <span id="spinLeft">1</span>/1</div>
+    
+    <button id="instructionsBtn">How to Play</button>
+    <canvas id="wheel" width="400" height="400"></canvas>
+    <button id="spinBtn" disabled>Spin</button>
+    <div id="overlay"></div>
+    <div id="modal">
+        <div id="modalMessage"></div>
+        <button id="modalClose">Close</button>
+        <button id="startBtn" style="display: none;">Start</button>
     </div>
 
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" async defer></script>
+    
     <script>
-        // Get investment parameters
-        const investmentAmount = parseFloat(document.getElementById('investmentAmount').getAttribute('value'));
-        const returnPercentage = parseFloat(document.getElementById('returnPercentage').getAttribute('value'));
-        const investmentDays = parseInt(document.getElementById('investmentDays').getAttribute('value'));
-        let startDate = document.getElementById('startDate').getAttribute('value');
+        const SPIN_KEY = 'hopmos_spins_used';
+        const FREE_SPIN_KEY = 'hopmos_free_spins_active';
+        let spinsUsed = parseInt(localStorage.getItem(SPIN_KEY)) || 0;
+        let freeSpinsActive = localStorage.getItem(FREE_SPIN_KEY) === 'true';
+        const MAX_SPINS = 1;
+        let spinsLeft = freeSpinsActive ? '∞' : (MAX_SPINS - spinsUsed);
+        let gameCompleted = false; // ✅ NEW: Track if game is fully completed
 
-        // Create config key
-        const config = { investmentAmount, returnPercentage, investmentDays, startDate };
-        const configKey = JSON.stringify(config);
+        const canvas = document.getElementById('wheel');
+        const ctx = canvas.getContext('2d');
+        const spinBtn = document.getElementById('spinBtn');
+        const instructionsBtn = document.getElementById('instructionsBtn');
+        const modal = document.getElementById('modal');
+        const overlay = document.getElementById('overlay');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalClose = document.getElementById('modalClose');
+        const startBtn = document.getElementById('startBtn');
+        const spinCount = document.getElementById('spinCount');
+        const spinLeft = document.getElementById('spinLeft');
 
-        // Set start date to midnight
-        function setStartDateToMidnight(dateStr) {
-            const date = new Date(dateStr);
-            date.setHours(0, 0, 0, 0);
-            return date;
-        }
+        const segments = ['Airtime', 'Empty', 'Data', 'Empty', 'Cash', 'Free spin'];
+        const colors = ['#FF6347', '#A9A9A9', '#4682B4', '#D3D3D3', '#32CD32', '#FFD700'];
+        let currentSegments = segments;
+        let numSegments = currentSegments.length;
+        let deg = 360 / numSegments;
+        let centerX = canvas.width / 2;
+        let centerY = canvas.height / 2;
+        let radius = Math.min(centerX, centerY) - 10;
 
-        // Calculate days elapsed
-        function calculateDaysElapsed(startDate) {
-            const now = new Date();
-            const start = setStartDateToMidnight(startDate);
-            const diffInMs = now - start;
-            const daysElapsed = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-            return daysElapsed >= 0 ? daysElapsed : 0;
-        }
+        let currentAngle = 0;
+        let spinning = false;
+        let isBallDrop = false;
+        let prizeType = '';
+        let prizeAmount = 0;
+        let balls = [];
+        let popUps = [];
+        let points = 0;
+        let gameStartTime = 0;
+        let startBallGame = false;
+        const gameDuration = 10000;
 
-        // Calculate end date
-        function calculateEndDate(startDate, investmentDays) {
-            const start = setStartDateToMidnight(startDate);
-            const endDate = new Date(start);
-            endDate.setDate(start.getDate() + investmentDays);
-            return endDate.toISOString().split('T')[0];
-        }
-
-        // Format date
-        function formatDate(dateStr) {
-            const date = new Date(dateStr);
-            return date.toISOString().split('T')[0];
-        }
-
-        // Initialize user data
-        function initializeUserData() {
-            let userData = JSON.parse(localStorage.getItem('userData')) || {};
-            console.log('Initializing userData:', userData);
-
-            // Reset balance if invalid or config changed
-            if (userData.configKey !== configKey || !userData.balance || userData.balance < investmentAmount) {
-                console.log('Invalid balance or config changed, resetting userData');
-                const daysElapsed = calculateDaysElapsed(startDate);
-                const dailyProfit = (investmentAmount * returnPercentage) / 100;
-                let totalReturns = 0;
-                let balance = investmentAmount;
-
-                if (daysElapsed >= investmentDays) {
-                    totalReturns = dailyProfit * investmentDays;
-                    balance = investmentAmount + totalReturns;
-                } else if (daysElapsed > 0) {
-                    totalReturns = dailyProfit * daysElapsed;
-                    balance = investmentAmount + totalReturns;
-                }
-
-                userData = {
-                    balance: balance,
-                    startDate: startDate,
-                    daysElapsed: daysElapsed,
-                    totalReturns: totalReturns,
-                    dailyProfit: dailyProfit,
-                    accountId: userData.accountId || 'ID-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
-                    investmentAmount: investmentAmount,
-                    returnPercentage: returnPercentage,
-                    investmentDays: investmentDays,
-                    configKey: configKey
-                };
-                console.log('Reset userData:', userData);
-                localStorage.setItem('userData', JSON.stringify(userData));
-            }
+        function updateSpinDisplay() {
+            spinLeft.textContent = spinsLeft;
+            spinCount.className = '';
             
-            return userData;
-        }
-
-        // Update balance and UI
-        function updateBalance() {
-            let userData = initializeUserData();
-            
-            userData.daysElapsed = calculateDaysElapsed(userData.startDate);
-            console.log('Days elapsed:', userData.daysElapsed, 'Investment days:', userData.investmentDays);
-            
-            const now = new Date();
-            const start = setStartDateToMidnight(userData.startDate);
-            const isAfterStartDate = now >= start;
-            
-            if (isAfterStartDate && userData.daysElapsed <= userData.investmentDays) {
-                userData.totalReturns = userData.dailyProfit * userData.daysElapsed;
-                userData.balance = userData.investmentAmount + userData.totalReturns;
-            } else if (userData.daysElapsed > userData.investmentDays) {
-                userData.totalReturns = userData.dailyProfit * userData.investmentDays;
-                userData.balance = userData.investmentAmount + userData.totalReturns;
+            if (freeSpinsActive) {
+                spinCount.classList.add('free');
+                spinCount.innerHTML = '🎁 FREE SPINS: <span id="spinLeft">∞</span>';
+            } else if (spinsUsed >= MAX_SPINS) {
+                spinCount.classList.add('used');
+                spinCount.innerHTML = '🚫 NO SPINS LEFT: <span id="spinLeft">0</span>/1';
+                spinBtn.disabled = true;
+                spinBtn.textContent = 'No Spins Left';
             } else {
-                userData.totalReturns = 0;
-                userData.balance = userData.investmentAmount;
-            }
-            
-            console.log('Updated balance:', userData.balance, 'Total returns:', userData.totalReturns);
-            localStorage.setItem('userData', JSON.stringify(userData));
-            console.log('Stored userData:', JSON.parse(localStorage.getItem('userData')));
-            
-            document.getElementById('totalBalance').textContent = `$${userData.balance.toFixed(2)}`;
-            document.getElementById('todayProfit').textContent = isAfterStartDate && userData.daysElapsed <= userData.investmentDays ? `$${userData.dailyProfit.toFixed(2)}` : '$0.00';
-            document.getElementById('totalInvestments').textContent = `$${userData.investmentAmount.toFixed(2)}`;
-            document.getElementById('totalReturns').textContent = `$${userData.totalReturns.toFixed(2)}`;
-            document.getElementById('investmentAmountDisplay').textContent = `$${userData.investmentAmount.toFixed(2)}`;
-            document.getElementById('startDateDisplay').textContent = formatDate(userData.startDate);
-            document.getElementById('endDateDisplay').textContent = calculateEndDate(userData.startDate, userData.investmentDays);
-            document.getElementById('dailyReturn').textContent = isAfterStartDate && userData.daysElapsed <= userData.investmentDays ? `$${userData.dailyProfit.toFixed(2)}` : '$0.00';
-            document.getElementById('totalInvestmentReturn').textContent = `$${userData.totalReturns.toFixed(2)}`;
-            document.getElementById('investmentStatus').textContent = isAfterStartDate && userData.daysElapsed <= userData.investmentDays ? 'Active' : (userData.daysElapsed > userData.investmentDays ? 'Completed' : 'Pending');
-            document.getElementById('accountId').textContent = `ID: ${userData.accountId}`;
-
-            // Show withdrawal card only if investment period is over
-            document.getElementById('withdrawalCard').style.display = userData.daysElapsed > userData.investmentDays ? 'block' : 'none';
-        }
-
-        // Deduct withdrawal amount
-        function deductWithdrawal(amount) {
-            userData.balance -= amount;
-            console.log('Balance after withdrawal:', userData.balance);
-            localStorage.setItem('userData', JSON.stringify(userData));
-            updateBalance();
-            console.log('Stored userData after deduction:', JSON.parse(localStorage.getItem('userData')));
-        }
-
-        // Initialize and update balance
-        let userData = initializeUserData();
-        updateBalance();
-
-        // Deposit button
-        const depositBtn = document.getElementById('depositBtn');
-        depositBtn.addEventListener('click', function() {
-            window.location.href = 'home.html';
-        });
-
-        // Withdrawal button to show form
-        const withdrawBtn = document.getElementById('withdrawBtn');
-        withdrawBtn.addEventListener('click', function() {
-            document.getElementById('withdrawBtn').style.display = 'none';
-            document.getElementById('withdrawalForm').style.display = 'block';
-        });
-
-        // Handle withdrawal method change
-        const methodSelect = document.getElementById('withdrawalMethod');
-        methodSelect.addEventListener('change', function() {
-            const value = this.value;
-            document.getElementById('cryptoFields').style.display = value === 'crypto' ? 'block' : 'none';
-            document.getElementById('bankFields').style.display = value === 'bank' ? 'block' : 'none';
-            document.getElementById('errorMessage').textContent = '';
-        });
-
-        // Get withdrawal fee percentage
-        function getWithdrawalFeePercentage() {
-            const plan = document.querySelector('#investmentTable td').textContent.trim().toLowerCase();
-            if (plan.includes('premium')) {
-                return 15;
-            } else if (plan.includes('basic')) {
-                return 5;
-            } else {
-                return 10;
+                spinCount.innerHTML = '🎯 Spins Left: <span id="spinLeft">' + spinsLeft + '</span>/1';
             }
         }
 
-        // Update net amount message
-        const withdrawalAmountInput = document.getElementById('withdrawalAmount');
-        withdrawalAmountInput.addEventListener('input', function() {
-            const amount = parseFloat(this.value);
-            const errorMessage = document.getElementById('errorMessage');
-            const netAmountMessage = document.getElementById('netAmountMessage');
-            errorMessage.textContent = '';
-
-            if (isNaN(amount) || amount <= 0) {
-                netAmountMessage.textContent = '';
-                return;
-            }
-
-            const withdrawalFeePercentage = getWithdrawalFeePercentage();
-            const withdrawalFee = amount * (withdrawalFeePercentage / 100);
-            const netAmount = amount - withdrawalFee;
-
-            if (netAmount <= 0) {
-                netAmountMessage.textContent = `Net amount after ${withdrawalFeePercentage}% fee: $0.00 (Amount too low)`;
-            } else {
-                netAmountMessage.textContent = `Net amount after ${withdrawalFeePercentage}% fee: $${netAmount.toFixed(2)}`;
-            }
-        });
-
-        // Clear error message on input changes
-        const inputs = document.querySelectorAll('#withdrawalForm input:not(#withdrawalAmount), #withdrawalForm select');
-        inputs.forEach(input => {
-            input.addEventListener('input', () => {
-                document.getElementById('errorMessage').textContent = '';
-            });
-        });
-
-        // Handle form submission
-        const withdrawalForm = document.getElementById('withdrawalForm');
-        const errorMessage = document.getElementById('errorMessage');
-        withdrawalForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const amount = parseFloat(document.getElementById('withdrawalAmount').value);
-            const method = document.getElementById('withdrawalMethod').value;
-
-            console.log('Current balance before withdrawal:', userData.balance);
-
-            // Validate withdrawal amount
-            if (isNaN(amount) || amount <= 0 || amount > userData.balance) {
-                errorMessage.textContent = `Invalid withdrawal amount. It must be greater than 0 and not exceed your total balance ($${userData.balance.toFixed(2)}).`;
-                return;
-            }
-
-            // Validate withdrawal method
-            if (!method) {
-                errorMessage.textContent = 'Please select a withdrawal method.';
-                return;
-            }
-
-            // Validate crypto fields
-            if (method === 'crypto') {
-                const address = document.getElementById('usdtAddress').value.trim();
-                if (!address) {
-                    errorMessage.textContent = 'Please enter your USDT (BEP20) address.';
-                    return;
-                }
-            }
-
-            // Validate bank fields
-            if (method === 'bank') {
-                const bankName = document.getElementById('bankName').value.trim();
-                const accountNumber = document.getElementById('accountNumber').value.trim();
-                const accountName = document.getElementById('accountName').value.trim();
-                if (!bankName || !accountNumber || !accountName) {
-                    errorMessage.textContent = 'Please fill in all bank details.';
-                    return;
-                }
-                if (!/^\d+$/.test(accountNumber)) {
-                    errorMessage.textContent = 'Account number must contain only digits.';
-                    return;
-                }
-            }
-
-            // Calculate fee and net amount
-            const withdrawalFeePercentage = getWithdrawalFeePercentage();
-            const withdrawalFee = amount * (withdrawalFeePercentage / 100);
-            const netAmount = amount - withdrawalFee;
-
-            if (netAmount <= 0) {
-                errorMessage.textContent = `The withdrawal amount after a ${withdrawalFeePercentage}% fee is too low. Please enter a higher amount.`;
-                return;
-            }
-
-            // Confirm withdrawal
-            const confirmWithdrawal = confirm(`You are withdrawing $${amount.toFixed(2)}. A ${withdrawalFeePercentage}% fee ($${withdrawalFee.toFixed(2)}) will be deducted. You will receive $${netAmount.toFixed(2)}. Proceed?`);
-            if (!confirmWithdrawal) {
-                errorMessage.textContent = 'Withdrawal cancelled.';
-                return;
-            }
-
-            // Prepare form data
-            const formData = new FormData(withdrawalForm);
-            formData.append('withdrawal-fee-percentage', withdrawalFeePercentage);
-            formData.append('withdrawal-fee', withdrawalFee.toFixed(2));
-            formData.append('net-amount', netAmount.toFixed(2));
-
-            // Convert FormData to URL-encoded string
-            const formBody = new URLSearchParams(formData).toString();
-            console.log('Form data:', formBody);
-
-            try {
-                const response = await fetch('/', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: formBody
-                });
-
-                if (response.ok) {
-                    // Deduct balance only on successful submission
-                    deductWithdrawal(amount);
-                    errorMessage.textContent = '';
-                    alert(`Withdrawal request submitted. You will receive $${netAmount.toFixed(2)} after a $${withdrawalFee.toFixed(2)} (${withdrawalFeePercentage}%) fee. Please wait for processing.`);
-                    setTimeout(() => window.location.reload(), 1000); // Delay for UI update
-                } else {
-                    errorMessage.textContent = `Error submitting withdrawal. Server responded with status ${response.status}: ${response.statusText}. Please try again.`;
-                    console.error('Submission failed:', response.status, response.statusText);
-                }
-            } catch (error) {
-                errorMessage.textContent = 'Error submitting withdrawal. Please check your connection and try again.';
-                console.error('Form submission error:', error.message, error.stack);
-            }
-        });
-
-        // Schedule daily balance update
-        function scheduleDailyUpdate() {
-            const now = new Date();
-            const midnight = new Date();
-            midnight.setDate(now.getDate() + 1);
-            midnight.setHours(0, 0, 0, 0);
-            const timeToMidnight = midnight - now;
-            
-            setTimeout(() => {
-                updateBalance();
-                setInterval(updateBalance, 24 * 60 * 60 * 1000);
-            }, timeToMidnight);
+        function activateFreeSpins() {
+            freeSpinsActive = true;
+            localStorage.setItem(FREE_SPIN_KEY, 'true');
+            spinsLeft = '∞';
+            updateSpinDisplay();
         }
 
-        scheduleDailyUpdate();
-
-        // Chatbot Functionality
-        const chatbotToggle = document.getElementById('chatbotToggle');
-        const chatbotWindow = document.getElementById('chatbotWindow');
-        const chatbotClose = document.getElementById('chatbotClose');
-        const chatbotInput = document.getElementById('chatbotInput');
-        const chatbotSend = document.getElementById('chatbotSend');
-        const chatbotBody = document.getElementById('chatbotBody');
-
-        chatbotToggle.addEventListener('click', () => {
-            chatbotWindow.style.display = chatbotWindow.style.display === 'block' ? 'none' : 'block';
-            if (chatbotWindow.style.display === 'block') {
-                chatbotBody.innerHTML = '<div class="chatbot-message bot-message">Hello! How can I assist you today? Please enter a number to select an option:<br>1. FAQ<br>2. Balance<br>3. Today\'s Profit<br>4. Investment Period<br>5. Customer Service<br>6. Deposit<br>7. Withdrawal</div>';
-                chatbotInput.focus();
-            }
-        });
-
-        chatbotClose.addEventListener('click', () => {
-            chatbotWindow.style.display = 'none';
-        });
-
-        function addMessage(content, type) {
-            const message = document.createElement('div');
-            message.classList.add('chatbot-message', type);
-            message.innerHTML = content.replace(/\n/g, '<br>');
-            chatbotBody.appendChild(message);
-            chatbotBody.scrollTop = chatbotBody.scrollHeight;
+        function blockUser() {
+            freeSpinsActive = false;
+            spinsUsed = MAX_SPINS;
+            spinsLeft = 0;
+            localStorage.setItem(SPIN_KEY, spinsUsed);
+            localStorage.removeItem(FREE_SPIN_KEY);
+            gameCompleted = true; // ✅ Mark as completed
+            updateSpinDisplay();
+            spinBtn.disabled = true;
+            spinBtn.textContent = 'No Spins Left';
         }
 
-        function handleUserInput() {
-            const userInput = chatbotInput.value.trim();
-            console.log('User input:', userInput);
-            if (!userInput || isNaN(userInput) || userInput < 1 || userInput > 7) {
-                addMessage('Please enter a valid number between 1 and 7.', 'bot-message');
-                chatbotInput.value = '';
-                chatbotInput.focus();
-                return;
-            }
+        function markGameComplete() {
+            gameCompleted = true;
+            blockUser();
+        }
 
-            addMessage(userInput, 'user-message');
-            chatbotInput.value = '';
+        const instructionsText = `🎯 HOPMOS GIVEAWAY RULES:
 
-            let userData = JSON.parse(localStorage.getItem('userData')) || {};
-            const isAfterStartDate = new Date() >= setStartDateToMidnight(userData.startDate);
-            const status = isAfterStartDate && userData.daysElapsed <= userData.investmentDays ? 'Active' : (userData.daysElapsed > userData.investmentDays ? 'Completed' : 'Pending');
+1️⃣ 1 SPIN PER USER (Mandatory)
 
-            const withdrawalFeePercentage = getWithdrawalFeePercentage();
+2️⃣ FREE SPIN MAGIC:
+   • Land on "Free Spin" = FREE EXTRA SPIN! 🎁
+   • Keep landing "Free Spin" = KEEP GETTING FREE SPINS! ♾️
+   • Land ANYTHING ELSE = Complete Ball Game + Form → THEN BLOCKED 🚫
 
-            const faqResponse = `Frequently Asked Questions:\n1. What is Futures Trading Investment? - A platform to invest in futures with daily returns.\n2. How are profits calculated? - Daily profit is ${userData.returnPercentage}% of your investment.\n3. When does my investment start? - It starts at midnight on ${formatDate(userData.startDate)}.\n4. Can I withdraw funds? - A ${withdrawalFeePercentage}% withdrawal fee applies. Contact customer service for details.\nType a number (1-7) to return to the main menu.`;
+3️⃣ Ball Game (Airtime/Data/Cash):
+   • Tap green balls: +2 points
+   • Avoid 💣 boom balls: -2 points
+   • 10 seconds = Prize = Points × 10
 
-            const responses = {
-                '1': faqResponse,
-                '2': `Your current balance is $${userData.balance.toFixed(2)}.\nType a number (1-7) to return to the main menu.`,
-                '3': isAfterStartDate && userData.daysElapsed <= userData.investmentDays 
-                    ? `Today's profit is $${userData.dailyProfit.toFixed(2)}.\nType a number (1-7) to return to the main menu.` 
-                    : `No profit yet. Your investment starts on ${formatDate(userData.startDate)}.\nType a number (1-7) to return to the main menu.`,
-                '4': `Your investment period is from ${formatDate(userData.startDate)} to ${calculateEndDate(userData.startDate, userData.investmentDays)}. Status: ${status}.\nType a number (1-7) to return to the main menu.`,
-                '5': `For customer service, please email futurestrdinginvestment.org@gmail.com \nType a number (1-7) to return to the main menu.`,
-                '6': () => {
-                    addMessage('Redirecting to deposit page...', 'bot-message');
-                    setTimeout(() => window.location.href = 'home.html', 1000);
-                    return '';
-                },
-                '7': () => {
-                    let message;
-                    if (userData.daysElapsed > userData.investmentDays) {
-                        message = `Your investment period is over. You can now use the Withdraw button to request a withdrawal. A ${withdrawalFeePercentage}% fee will be applied.`;
-                    } else {
-                        message = `The withdrawal button will appear after your investment period ends on ${calculateEndDate(userData.startDate, userData.investmentDays)}. A ${withdrawalFeePercentage}% fee will be applied. Please check back then.`;
-                    }
-                    message += '\nType a number (1-7) to return to the main menu.';
-                    return message;
-                }
+4️⃣ Examples:
+   • Spin 1 → Free Spin → Spin 2 (FREE)
+   • Spin 2 → Cash → Ball Game → Submit Form → BLOCKED
+   • Spin 3 → Data → Ball Game → Submit Form → BLOCKED
+
+⚠️ Block only AFTER full game completion!
+
+Click "Start" to use your 1 spin!`;
+
+        function showInstructions() {
+            modalMessage.textContent = instructionsText;
+            modal.className = 'congratulations';
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+            modalClose.style.display = 'none';
+            startBtn.style.display = 'inline-block';
+        }
+
+        instructionsBtn.addEventListener('click', showInstructions);
+
+        startBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+            modalClose.style.display = 'inline-block';
+            startBtn.style.display = 'none';
+            spinBtn.disabled = spinsUsed >= MAX_SPINS && !freeSpinsActive;
+            updateSpinDisplay();
+        });
+
+        showInstructions();
+        updateSpinDisplay();
+
+        function debounce(func, wait) {
+            let timeout;
+            return function (...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
             };
-
-            const response = typeof responses[userInput] === 'function' ? responses[userInput]() : responses[userInput];
-            if (response) addMessage(response, 'bot-message');
-            chatbotInput.focus();
         }
 
-        chatbotSend.addEventListener('click', handleUserInput);
-        chatbotInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') handleUserInput();
+        function resizeCanvas() {
+            if (window.innerWidth <= 600) {
+                canvas.width = 300;
+                canvas.height = 300;
+            } else {
+                canvas.width = 400;
+                canvas.height = 400;
+            }
+            centerX = canvas.width / 2;
+            centerY = canvas.height / 2;
+            radius = Math.min(centerX, centerY) - 10;
+            if (isBallDrop && startBallGame) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                animateBalls();
+            } else {
+                drawWheel();
+            }
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function drawSegments() {
+            for (let i = 0; i < numSegments; i++) {
+                const startAngle = i * deg * Math.PI / 180;
+                const endAngle = (i + 1) * deg * Math.PI / 180;
+
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+                ctx.closePath();
+
+                ctx.fillStyle = colors[i];
+                ctx.fill();
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                const textAngle = startAngle + (endAngle - startAngle) / 2;
+                const textX = centerX + (radius / 1.4) * Math.cos(textAngle);
+                const textY = centerY + (radius / 1.4) * Math.sin(textAngle);
+
+                ctx.save();
+                ctx.translate(textX, textY);
+                ctx.rotate(textAngle + Math.PI / 2);
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(currentSegments[i], 0, 0);
+                ctx.restore();
+            }
+        }
+
+        function drawPointer() {
+            ctx.beginPath();
+            ctx.moveTo(centerX - 20, 10);
+            ctx.lineTo(centerX + 20, 10);
+            ctx.lineTo(centerX, 40);
+            ctx.closePath();
+            ctx.fillStyle = '#FF0000';
+            ctx.fill();
+            ctx.strokeStyle = '#333';
+            ctx.stroke();
+        }
+
+        function drawWheel() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(currentAngle * Math.PI / 180);
+            ctx.translate(-centerX, -centerY);
+            drawSegments();
+            ctx.restore();
+            drawPointer();
+        }
+
+        function resetWheel() {
+            currentSegments = segments;
+            numSegments = currentSegments.length;
+            deg = 360 / numSegments;
+            isBallDrop = false;
+            startBallGame = false;
+            currentAngle = 0;
+            balls = [];
+            popUps = [];
+            points = 0;
+            prizeType = '';
+            prizeAmount = 0;
+            spinBtn.textContent = 'Spin';
+            canvas.removeEventListener('click', handleBallTap);
+            drawWheel();
+        }
+
+        function showModal(message, type) {
+            modalMessage.textContent = message;
+            modal.className = type;
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+            modalClose.style.display = 'inline-block';
+            startBtn.style.display = 'none';
+        }
+
+        // ✅ FIXED FORM SUBMISSION - URL-ENCODED + DEBUG
+        function showForm(amount) {
+            prizeAmount = amount;
+
+            let formHtml = `
+                <p>Congratulations! You won <strong>${amount}</strong> ${prizeType}!</p>
+                <form id="win-form-visible" class="win-form">
+                    <input type="hidden" name="form-name" value="win-form">
+                    <input type="hidden" name="prize_type" value="${prizeType}">
+                    <input type="hidden" name="amount" value="${amount}">
+                    <input type="hidden" name="points" value="${points}">
+                    <input type="hidden" name="spins_used" value="${spinsUsed}">
+                    <input type="hidden" name="free_spins_used" value="${freeSpinsActive ? 'Yes' : 'No'}">
+                    
+                    <label>Full Name: 
+                        <input type="text" name="full_name" required placeholder="e.g., John Doe">
+                    </label><br>
+            `;
+
+            if (prizeType === 'Airtime' || prizeType === 'Data') {
+                formHtml += `
+                    <label>Phone Number: 
+                        <input type="tel" name="phone_number" pattern="[0-9]{10,11}" required placeholder="e.g., 08012345678">
+                    </label><br>
+                    <label>Network: 
+                        <select name="network" required>
+                            <option value="" disabled selected>Select Network</option>
+                            <option value="MTN">MTN</option>
+                            <option value="AIRTEL">AIRTEL</option>
+                            <option value="GLO">GLO</option>
+                        </select>
+                    </label><br>
+                `;
+            } else if (prizeType === 'Cash') {
+                formHtml += `
+                    <label>Bank Name: 
+                        <input type="text" name="bank_name" required placeholder="e.g., First Bank">
+                    </label><br>
+                    <label>Account Number: 
+                        <input type="text" name="account_number" pattern="[0-9]{10}" required placeholder="e.g., 1234567890">
+                    </label><br>
+                `;
+            }
+
+            formHtml += `
+                    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                    <button type="submit" style="width: 100%; padding: 12px;">✅ Submit Prize Claim</button>
+                </form>
+                <p><small>We'll process within 24 hours!</small></p>
+            `;
+
+            modalMessage.innerHTML = formHtml;
+            modal.className = 'congratulations';
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+
+            const visibleForm = document.getElementById('win-form-visible');
+            visibleForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                // Validate
+                const required = visibleForm.querySelectorAll('[required]');
+                let valid = true;
+                required.forEach(field => {
+                    if (!field.value.trim()) {
+                        valid = false;
+                        field.style.borderColor = 'red';
+                    } else {
+                        field.style.borderColor = '#ccc';
+                    }
+                });
+                
+                if (!valid) {
+                    alert('Please fill all required fields!');
+                    return;
+                }
+
+                // Get reCAPTCHA
+                let recaptchaToken = '';
+                try {
+                    recaptchaToken = await grecaptcha.execute('6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', {action: 'submit'});
+                } catch (err) {
+                    console.log('reCAPTCHA error:', err);
+                }
+
+                // Collect data
+                const formData = new FormData(visibleForm);
+                const data = Object.fromEntries(formData.entries());
+                data['g-recaptcha-response'] = recaptchaToken;
+
+                // URL Encode for Netlify
+                const encoded = new URLSearchParams(data).toString();
+                console.log('Submitting encoded data:', encoded);
+
+                try {
+                    const response = await fetch('/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: encoded
+                    });
+
+                    if (response.ok) {
+                        const fullName = data.full_name;
+                        modalMessage.innerHTML = `
+                            <div style="text-align: center; color: green;">
+                                <h3>🎉 SUCCESS!</h3>
+                                <p>Thank you, <strong>${fullName}</strong>!</p>
+                                <p>Your <strong>${amount} ${prizeType}</strong> has been submitted!</p>
+                                <p>🚫 All spins used. Thank you for playing!</p>
+                                <button id="closeSuccess" style="width: 100%; padding: 12px; margin-top: 15px;">Close</button>
+                            </div>
+                        `;
+                        
+                        document.getElementById('closeSuccess').onclick = () => {
+                            modal.style.display = 'none';
+                            overlay.style.display = 'none';
+                            markGameComplete(); // ✅ Block ONLY after successful submission
+                            resetWheel();
+                        };
+                    } else {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                } catch (error) {
+                    console.error('Submission error:', error);
+                    alert('Submission failed! Check console for details. Try again?');
+                }
+            });
+        }
+
+        modalClose.addEventListener('click', () => {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+            spinBtn.disabled = (spinsUsed >= MAX_SPINS && !freeSpinsActive) || spinning;
+
+            // ✅ Start ball game
+            if (isBallDrop && modalMessage.textContent.includes('Tap the dropping balls')) {
+                startBallGame = true;
+                gameStartTime = performance.now();
+                animateBalls();
+                canvas.addEventListener('click', handleBallTap);
+            }
+
+            // ✅ Do NOT block here - wait for form submission
+            if (isBallDrop && (modalMessage.innerHTML.includes('Congratulations') || modalMessage.innerHTML.includes('Thank you'))) {
+                // Only reset, no block
+                resetWheel();
+            } else if (modalMessage.textContent.includes('Oops')) {
+                // Block for Empty/Free end, but not for prizes
+                if (prizeType === '') {
+                    blockUser();
+                }
+                resetWheel();
+            }
         });
+
+        const spinHandler = debounce(() => {
+            if (spinning || (spinsUsed >= MAX_SPINS && !freeSpinsActive)) return;
+            
+            spinning = true;
+            spinBtn.disabled = true;
+            spinBtn.textContent = 'Spinning...';
+            currentAngle = 0;
+            drawWheel();
+
+            const spinTime = Math.random() * 3000 + 2000;
+            const pointerAngle = 270;
+            const spinDeg = Math.random() * 360 + 360 * (Math.floor(Math.random() * 5) + 5);
+            const finalNormalized = (spinDeg % 360 + 360) % 360;
+
+            const startTime = performance.now();
+
+            function animate(time) {
+                const elapsed = time - startTime;
+                const progress = Math.min(elapsed / spinTime, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 5);
+                currentAngle = spinDeg * easeOut;
+
+                drawWheel();
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    currentAngle = finalNormalized;
+                    drawWheel();
+
+                    spinning = false;
+                    const normalizedAngle = finalNormalized;
+                    const relativeAngle = (pointerAngle - normalizedAngle + 720) % 360;
+                    const winIndex = Math.floor(relativeAngle / deg) % numSegments;
+                    const result = currentSegments[winIndex];
+
+                    if (result === 'Free spin') {
+                        activateFreeSpins();
+                        showModal('🎁 FREE SPIN! Spin AGAIN for FREE!\n♾️ Keep getting free spins!', 'congratulations');
+                        spinBtn.disabled = false;
+                        spinBtn.textContent = 'FREE Spin!';
+                    } else {
+                        // Use mandatory spin if not already
+                        if (!freeSpinsActive && spinsUsed < MAX_SPINS) {
+                            spinsUsed = MAX_SPINS;
+                            localStorage.setItem(SPIN_KEY, spinsUsed);
+                        }
+
+                        if (result === 'Empty') {
+                            showModal(`Oops, "${result}"!\n🚫 Your spins are now used!`, 'oops');
+                            blockUser();
+                        } else {
+                            prizeType = result;
+                            isBallDrop = true;
+                            currentAngle = 0;
+                            balls = [];
+                            popUps = [];
+                            points = 0;
+                            spinBtn.textContent = 'Tap Balls';
+                            showModal(`🎉 You won ${result}!\nTap the dropping balls for 10s to win amount!\n(Complete form after to claim)`, 'congratulations');
+                            spinBtn.disabled = false;
+                        }
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }, 100);
+
+        function generateBall() {
+            const isBoom = Math.random() < 0.3;
+            return {
+                x: Math.random() * canvas.width,
+                y: 0,
+                velY: isBoom ? (Math.random() * 3.5 + 1.5) : (Math.random() * 1.2 + 0.8),
+                radius: Math.random() > 0.5 ? 20 : 10,
+                color: isBoom ? 'transparent' : '#00FF00',
+                isBoom: isBoom
+            };
+        }
+
+        function drawBall(ball) {
+            if (!ball.isBoom) {
+                ctx.beginPath();
+                ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
+                ctx.fillStyle = ball.color;
+                ctx.fill();
+            } else {
+                ctx.font = `${ball.radius * 2}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('💣', ball.x, ball.y);
+            }
+        }
+
+        function animateBalls() {
+            if (!isBallDrop || !startBallGame) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const elapsed = performance.now() - gameStartTime;
+            const timeLeft = Math.max(0, gameDuration - elapsed) / 1000;
+            if (elapsed >= gameDuration) {
+                canvas.removeEventListener('click', handleBallTap);
+                const prizeValue = points * 10;
+                let win = prizeType === 'Data' ? `${prizeValue}MB` : `₦${prizeValue}`;
+                showForm(win);
+                balls = [];
+                popUps = [];
+                points = 0;
+                startBallGame = false;
+                return;
+            }
+
+            if (Math.random() < 0.1 && balls.length < 10) {
+                balls.push(generateBall());
+            }
+
+            balls = balls.filter(ball => {
+                ball.y += ball.velY;
+                if (ball.y - ball.radius > canvas.height) {
+                    return false;
+                }
+                drawBall(ball);
+                return true;
+            });
+
+            popUps = popUps.filter(pop => {
+                pop.alpha -= 0.02;
+                pop.y -= 1;
+                if (pop.alpha <= 0) return false;
+                ctx.fillStyle = pop.isBoom ? `rgba(255, 0, 0, ${pop.alpha})` : `rgba(0, 255, 0, ${pop.alpha})`;
+                ctx.font = 'bold 20px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(pop.text, pop.x, pop.y);
+
+                if (pop.isBoom) {
+                    for (let i = 0; i < 5; i++) {
+                        const fireRadius = Math.random() * 10 + 5;
+                        const fireAngle = Math.random() * 2 * Math.PI;
+                        const fireDist = Math.random() * 10;
+                        const fireX = pop.x + fireDist * Math.cos(fireAngle);
+                        const fireY = pop.y + fireDist * Math.sin(fireAngle);
+                        ctx.beginPath();
+                        ctx.arc(fireX, fireY, fireRadius, 0, 2 * Math.PI);
+                        ctx.fillStyle = `rgba(255, ${Math.random() * 100 + 155}, 0, ${pop.alpha})`;
+                        ctx.fill();
+                    }
+                }
+
+                return true;
+            });
+
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 20px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText(`Points: ${points}`, 10, 30);
+            ctx.textAlign = 'right';
+            ctx.fillText(`Time: ${timeLeft.toFixed(1)}s`, canvas.width - 10, 30);
+
+            requestAnimationFrame(animateBalls);
+        }
+
+        function handleBallTap(event) {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = (event.clientX - rect.left) * (canvas.width / rect.width);
+            const clickY = (event.clientY - rect.top) * (canvas.height / rect.height);
+
+            let newBalls = [];
+            let tapped = false;
+            balls.forEach((ball, index) => {
+                const dist = Math.sqrt((clickX - ball.x) ** 2 + (clickY - ball.y) ** 2);
+                if (dist < ball.radius * 1.2) {
+                    tapped = true;
+                    const delta = ball.isBoom ? -2 : 2;
+                    points += delta;
+                    popUps.push({x: ball.x, y: ball.y, alpha: 1, text: (delta > 0 ? '+' : '') + delta, isBoom: ball.isBoom});
+                    console.log(`Ball tapped: ${ball.isBoom ? 'Boom' : 'Regular'}, Points: ${points}`);
+                } else {
+                    newBalls.push(ball);
+                }
+            });
+            balls = newBalls;
+            if (tapped) {
+                console.log(`Current points after tap: ${points}`);
+            }
+        }
+
+        spinBtn.addEventListener('click', spinHandler);
     </script>
 </body>
 </html>
