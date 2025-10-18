@@ -34,7 +34,7 @@
             margin-bottom: 10px;
             padding: 8px 16px;
             border-radius: 20px;
-            background: linear-gradient(45deg, #4CAF50, #45a049);
+            background: linear-gradient(45deg, #FFD700, #FFA500);
             color: white;
             min-width: 150px;
             text-align: center;
@@ -44,6 +44,19 @@
         }
         #spinCount.used {
             background: linear-gradient(45deg, #f44336, #d32f2f);
+        }
+        #resetNotice {
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
         #instructionsBtn {
             padding: 8px 16px;
@@ -217,7 +230,10 @@
     <img src="https://raw.githubusercontent.com/hopmos/webimage/main/Hopmoslogo.png" alt="HOPMOS Giveaway Logo" class="logo">
     <h1>GIVEAWAY GAMES</h1>
     
-    <div id="spinCount">🎯 Spins Left: <span id="spinLeft">1</span>/1</div>
+    <!-- 🔥 NEW RESET NOTICE -->
+    <div id="resetNotice">🔥 SPECIAL: 2 FREE SPINS FOR EVERYONE! 🔥</div>
+    
+    <div id="spinCount">🎯 Spins Left: <span id="spinLeft">2</span>/2</div>
     
     <button id="instructionsBtn">How to Play</button>
     <canvas id="wheel" width="400" height="400"></canvas>
@@ -230,11 +246,26 @@
     </div>
 
     <script>
+        // 🔥 RESET ALL USERS - NEW 2 FREE SPINS!
         const SPIN_KEY = 'hopmos_spins_used';
         const FREE_SPIN_KEY = 'hopmos_free_spins_active';
+        const RESET_KEY = 'hopmos_reset_2025'; // NEW RESET FLAG
+        
+        // ✅ AUTOMATIC RESET FOR ALL USERS
+        function resetAllUsers() {
+            localStorage.setItem(RESET_KEY, 'true'); // Mark as reset
+            localStorage.setItem(SPIN_KEY, '0');     // Reset spins to 0
+            localStorage.removeItem(FREE_SPIN_KEY);  // Clear free spins
+        }
+        
+        // ✅ CHECK IF NEEDS RESET
+        if (localStorage.getItem(RESET_KEY) !== 'true') {
+            resetAllUsers();
+        }
+        
         let spinsUsed = parseInt(localStorage.getItem(SPIN_KEY)) || 0;
         let freeSpinsActive = localStorage.getItem(FREE_SPIN_KEY) === 'true';
-        const MAX_SPINS = 1;
+        const MAX_SPINS = 2; // 🔥 CHANGED TO 2 SPINS
         let spinsLeft = freeSpinsActive ? '∞' : (MAX_SPINS - spinsUsed);
         let gameCompleted = false;
 
@@ -280,11 +311,11 @@
                 spinCount.innerHTML = '🎁 FREE SPINS: <span id="spinLeft">∞</span>';
             } else if (spinsUsed >= MAX_SPINS) {
                 spinCount.classList.add('used');
-                spinCount.innerHTML = '🚫 NO SPINS LEFT: <span id="spinLeft">0</span>/1';
+                spinCount.innerHTML = '🚫 NO SPINS LEFT: <span id="spinLeft">0</span>/2';
                 spinBtn.disabled = true;
                 spinBtn.textContent = 'No Spins Left';
             } else {
-                spinCount.innerHTML = '🎯 Spins Left: <span id="spinLeft">' + spinsLeft + '</span>/1';
+                spinCount.innerHTML = '🎯 Spins Left: <span id="spinLeft">' + spinsLeft + '</span>/2';
             }
         }
 
@@ -312,23 +343,26 @@
             blockUser();
         }
 
+        // 🔥 UPDATED INSTRUCTIONS FOR 2 FREE SPINS
         const instructionsText = `🎯 HOPMOS GIVEAWAY RULES:
 
-1️⃣ 1 SPIN PER USER (Mandatory)
+🔥 SPECIAL OFFER: 2 FREE SPINS FOR EVERYONE! 🔥
+
+1️⃣ 2 FREE SPINS PER USER (Reset for all!)
 
 2️⃣ FREE SPIN MAGIC:
    • Land on "Free Spin" = FREE EXTRA SPIN! 🎁
    • Keep landing "Free Spin" = KEEP GETTING FREE SPINS! ♾️
-   • Land ANYTHING ELSE = Complete Ball Game + Form → THEN BLOCKED 🚫
+   • Land ANYTHING ELSE = Complete Ball Game + Form → USE NEXT SPIN
 
 3️⃣ Ball Game (Airtime/Data/Cash):
    • Tap green balls: +2 points
    • Avoid 💣 boom balls: -2 points
    • 10 seconds = Prize = Points × 10
 
-⚠️ Block only AFTER full game completion!
+⚠️ Block only AFTER 2 spins used!
 
-Click "Start" to use your 1 spin!`;
+Click "Start" to use your 2 FREE spins!`;
 
         function showInstructions() {
             modalMessage.textContent = instructionsText;
@@ -565,6 +599,7 @@ Click "Start" to use your 1 spin!`;
                         <p>Thank you, <strong>${fullName}</strong>!</p>
                         <p>Your <strong>${amount} ${prizeType}</strong> has been submitted!</p>
                         <p>✅ Check your email shortly!</p>
+                        <p><strong>You have <span id="remainingSpins">${spinsLeft}</span> spins left!</strong></p>
                         <button id="closeSuccess" style="width: 100%; padding: 12px; margin-top: 15px;">Close</button>
                     </div>
                 `;
@@ -572,7 +607,8 @@ Click "Start" to use your 1 spin!`;
                 document.getElementById('closeSuccess').onclick = () => {
                     modal.style.display = 'none';
                     overlay.style.display = 'none';
-                    markGameComplete(); // Block NOW
+                    // 🔥 DON'T BLOCK - LET THEM USE REMAINING SPINS!
+                    updateSpinDisplay();
                     resetWheel();
                 };
             });
@@ -594,7 +630,10 @@ Click "Start" to use your 1 spin!`;
                 resetWheel();
             } else if (modalMessage.textContent.includes('Oops')) {
                 if (prizeType === '') {
-                    blockUser();
+                    // Only block if no spins left
+                    if (spinsUsed >= MAX_SPINS && !freeSpinsActive) {
+                        blockUser();
+                    }
                 }
                 resetWheel();
             }
@@ -642,14 +681,16 @@ Click "Start" to use your 1 spin!`;
                         spinBtn.disabled = false;
                         spinBtn.textContent = 'FREE Spin!';
                     } else {
+                        // 🔥 ONLY INCREMENT SPINS IF NOT FREE SPINS
                         if (!freeSpinsActive && spinsUsed < MAX_SPINS) {
-                            spinsUsed = MAX_SPINS;
+                            spinsUsed++;
                             localStorage.setItem(SPIN_KEY, spinsUsed);
+                            spinsLeft = MAX_SPINS - spinsUsed;
                         }
 
                         if (result === 'Empty') {
-                            showModal(`Oops, "${result}"!\n🚫 Your spins are now used!`, 'oops');
-                            blockUser();
+                            showModal(`Oops, "${result}"!\n🎯 You have ${spinsLeft} spins left!`, 'oops');
+                            // 🔥 DON'T BLOCK - LET THEM CONTINUE
                         } else {
                             prizeType = result;
                             isBallDrop = true;
@@ -658,7 +699,7 @@ Click "Start" to use your 1 spin!`;
                             popUps = [];
                             points = 0;
                             spinBtn.textContent = 'Tap Balls';
-                            showModal(`🎉 You won ${result}!\nTap the dropping balls for 10s to win amount!\n(Complete form after to claim)`, 'congratulations');
+                            showModal(`🎉 You won ${result}!\nTap the dropping balls for 10s to win amount!\n(Complete form after to claim)\n\n🎯 Spins left: ${spinsLeft}`, 'congratulations');
                             spinBtn.disabled = false;
                         }
                     }
